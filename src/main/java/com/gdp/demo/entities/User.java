@@ -13,7 +13,6 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 @Builder
-
 @Entity
 @Table(name = "users")
 public class User {
