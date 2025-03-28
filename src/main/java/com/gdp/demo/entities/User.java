@@ -35,6 +35,7 @@ public class User {
     @Column(name = "user_image_name")
     private String imageName;
 
+	
 
 
 

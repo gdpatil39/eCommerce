@@ -1,10 +1,8 @@
 package com.gdp.demo.dtos;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,6 +23,12 @@ public class Userdtos {
 
 
     private String imageName;
+
+
+	
+
+
+	
 
 
 }

@@ -5,6 +5,8 @@ import com.gdp.demo.entities.User;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 public interface UserService {
     //create
     Userdtos createUser(Userdtos userdtos);

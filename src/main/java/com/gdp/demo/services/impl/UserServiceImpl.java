@@ -7,18 +7,12 @@ import com.gdp.demo.services.UserService;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -32,9 +26,10 @@ public class UserServiceImpl implements UserService {
     public Userdtos createUser(Userdtos userdtos) {
         
     	//generate unique id in string format 
-    	String userId=UUID.randomUUID().toString();
-    	userdtos.setUserId(userId);
-    	
+//    	String userId=UUID.randomUUID().toString();
+    	//userdtos.setUserId(userId);
+
+        userdtos.setUserId(UUID.randomUUID().toString());
     	User user=dtoToEntity(userdtos);
          User saveUser = userRepository.save(user);
 
@@ -54,6 +49,7 @@ public class UserServiceImpl implements UserService {
     	User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found with given id "));
     	
     	user.setAbout(userdtos.getAbout());
+    	user.setAbout(userdtos.getAbout());
     	user.setName(userdtos.getName());
     	user.setGender(userdtos.getGender());
     	user.setPassword(userdtos.getPassword());
@@ -69,12 +65,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
+        User userDelete = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found with given id "));
 
+        userRepository.delete(userDelete);
     }
 
     @Override
     public List<Userdtos> getAllUser() {
-        return null;
+        List<User> userList = userRepository.findAll();
+       /*
+       List<Userdtos> allUserdtosList = userList.stream().map(user -> entityToDto(user)).collect(Collectors.toList());
+        return allUserdtosList; // here we change to method reference
+       */
+        return userList.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
     @Override
