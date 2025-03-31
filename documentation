@@ -1,0 +1,36 @@
+1. dependecy add 
+	<dependency>
+   	 	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
+	
+2.  use the anotation to perform bean proprty validation
+
+where in controller ,we create user .for example here we validate userDto field like name ,adress etc
+
+@Size( min=3, max=10, message= " invalid name !! ")
+private string name;
+
+@Email(message ="invalid email")
+
+@NotBlank(message ="Password is requried")
+
+@Patter
+@Custom validator
+
+
+
+
+3. Enable the validation @Valid Annotation 
+
+example 
+public ResponseEntity<UserDto> CreateUser(@Valid @Request80ay UserDto userDto){
+
+}
+
+Public ResponceEntity<UserDto> updateUser(
+@PathVariable("userId") String userId,
+@Valid @RequestBody UserDto userDto
+
+)
+	
