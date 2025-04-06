@@ -1,5 +1,7 @@
 package com.gdp.demo.dtos;
 
+import com.gdp.demo.validate.ImageNameValid;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -30,7 +32,7 @@ public class Userdtos {
     @Size(min =3, max=150, message= "invalid Name")
     private String about;
 
-
+    @ImageNameValid
     private String imageName;
 
 
