@@ -2,6 +2,7 @@ package com.gdp.demo.services.impl;
 
 import com.gdp.demo.dtos.Userdtos;
 import com.gdp.demo.entities.User;
+import com.gdp.demo.exceptions.ResourceNotFoundException;
 import com.gdp.demo.repositories.UserRepository;
 import com.gdp.demo.services.UserService;
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Userdtos updateUser(Userdtos userdtos, String userId) {
         
-    	User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found with given id "));
+    	User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user not found with given id "));
     	
     	user.setAbout(userdtos.getAbout());
     	user.setAbout(userdtos.getAbout());
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        User userDelete = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found with given id "));
+        User userDelete = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user not found with given id "));
 
         userRepository.delete(userDelete);
     }
@@ -82,14 +83,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Userdtos getUserById(String userId) {
-    	User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found with given id "));
+    	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user not found with given id "));
         return entityToDto(user);
     }
 
     @Override
     public Userdtos getUserByEmail(String email) {
        
-    	User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("user not found with given email id and password"));
+    	User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("user not found with given email id and password"));
     	
     	return entityToDto(user);
     }
