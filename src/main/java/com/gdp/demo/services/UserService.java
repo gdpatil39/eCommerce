@@ -1,5 +1,6 @@
 package com.gdp.demo.services;
 
+import com.gdp.demo.dtos.PageableResponse;
 import com.gdp.demo.dtos.Userdtos;
 import com.gdp.demo.entities.User;
 
@@ -19,7 +20,7 @@ public interface UserService {
 
 
     //get all users
-    List<Userdtos> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir);
+    PageableResponse<Userdtos> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir);
 
     //get single user by id
     Userdtos getUserById(String userId);

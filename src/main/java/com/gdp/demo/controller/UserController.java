@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gdp.demo.dtos.ApiResponseMessage;
+import com.gdp.demo.dtos.PageableResponse;
 import com.gdp.demo.dtos.Userdtos;
 import com.gdp.demo.services.UserService;
 
@@ -71,7 +72,7 @@ public class UserController {
 		
 	//get all
 		@GetMapping
-		public ResponseEntity<List<Userdtos>> getAllUser(
+		public ResponseEntity<PageableResponse<Userdtos>> getAllUser(
 				@RequestParam(value="pageNumber",defaultValue ="0", required = false) int pageNumber,
 				@RequestParam(value="pageSize",defaultValue ="10", required = false) int pageSize,
 				
