@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,10 +75,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Userdtos> getAllUser(int pageNumber,int pageSize ) {
+    public List<Userdtos> getAllUser(int pageNumber,int pageSize, String sortBy, String sortDir) {
        
     	
-    	PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+    	// Sort sort = Sort.by(sortBy);
+    	Sort sort=(sortDir.equalsIgnoreCase("desc")) ?(Sort.by(sortBy).descending()):Sort.by(sortBy).ascending();
+    	
+    	//pagination and sorting
+    	PageRequest pageable = PageRequest.of(pageNumber, pageSize,sort);
     	 Page<User> page = userRepository.findAll(pageable);
     	 
     	 List<User> users = page.getContent();
