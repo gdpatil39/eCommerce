@@ -8,6 +8,8 @@ import com.gdp.demo.services.UserService;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,13 +74,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Userdtos> getAllUser() {
-        List<User> userList = userRepository.findAll();
-       /*
+    public List<Userdtos> getAllUser(int pageNumber,int pageSize ) {
+       
+    	
+    	PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+    	 Page<User> page = userRepository.findAll(pageable);
+    	 
+    	 List<User> users = page.getContent();
+    	 
+       
+        
+        
+        /*
        List<Userdtos> allUserdtosList = userList.stream().map(user -> entityToDto(user)).collect(Collectors.toList());
         return allUserdtosList; // here we change to method reference
        */
-        return userList.stream().map(this::entityToDto).collect(Collectors.toList());
+        return users.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
     @Override

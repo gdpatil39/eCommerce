@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gdp.demo.dtos.ApiResponseMessage;
@@ -70,8 +71,13 @@ public class UserController {
 		
 	//get all
 		@GetMapping
-		public ResponseEntity<List<Userdtos>> getAllUser(){
-			return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
+		public ResponseEntity<List<Userdtos>> getAllUser(
+				@RequestParam(value="pageNumber",defaultValue ="0", required = false) int pageNumber,
+				@RequestParam(value="pageSize",defaultValue ="10", required = false) int pageSize
+				){
+			
+			
+			return new ResponseEntity<>(userService.getAllUser(pageNumber,pageSize),HttpStatus.OK);
 			
 		}
 		
