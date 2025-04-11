@@ -4,6 +4,7 @@ import com.gdp.demo.dtos.PageableResponse;
 import com.gdp.demo.dtos.Userdtos;
 import com.gdp.demo.entities.User;
 import com.gdp.demo.exceptions.ResourceNotFoundException;
+import com.gdp.demo.helper.Helper;
 import com.gdp.demo.repositories.UserRepository;
 import com.gdp.demo.services.UserService;
 
@@ -80,22 +81,8 @@ public class UserServiceImpl implements UserService {
 		PageRequest pageable = PageRequest.of(pageNumber, pageSize, sort);
 		Page<User> page = userRepository.findAll(pageable);
 
-		List<User> users = page.getContent();
-
-		
-		 List<Userdtos> allUserdtosList = users.stream().map(user ->
-		  entityToDto(user)).collect(Collectors.toList()); 
 		 
-		 PageableResponse<Userdtos> response= new PageableResponse<>();
-		 response.setContent(allUserdtosList);
-		 response.setPageNumber(page.getNumber());
-		 response.setPageSize(page.getSize());
-		 response.setTotalElements(page.getTotalElements());
-		 response.setTotalpage(page.getTotalPages());
-		 
-		 response.setLastPage(page.isLast());
-		 
-		 
+		 PageableResponse<Userdtos> response = Helper.getPageableResponse(page, Userdtos.class);
 		 
 		 return response; //
 		 
