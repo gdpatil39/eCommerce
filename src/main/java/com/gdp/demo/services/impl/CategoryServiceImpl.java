@@ -2,12 +2,15 @@ package com.gdp.demo.services.impl;
 
 
 
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.gdp.demo.dtos.CategoryDto;
 import com.gdp.demo.dtos.PageableResponse;
@@ -16,7 +19,7 @@ import com.gdp.demo.exceptions.ResourceNotFoundException;
 import com.gdp.demo.helper.Helper;
 import com.gdp.demo.repositories.CategoryRepository;
 import com.gdp.demo.services.CategoryService;
-
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
@@ -27,6 +30,11 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Override
 	public CategoryDto create(CategoryDto categoryDto) {
+		//creating categoryId:randomly
+		String categoryId= UUID.randomUUID().toString();
+		categoryDto.setCategoryId(categoryId);
+		
+		
 		Category category = mapper.map(categoryDto, Category.class);
 		Category saveCategory = categoryRepository.save(category);
 		return mapper.map(saveCategory, CategoryDto.class);
@@ -35,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public CategoryDto update(CategoryDto categoryDto, String categoryId) {
 		//get category of given id
-		Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+		Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found with give id"));
 		
 		//update category details
 		category.setTitle(categoryDto.getTitle());
