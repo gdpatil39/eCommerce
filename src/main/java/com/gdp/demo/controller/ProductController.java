@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +21,12 @@ import com.gdp.demo.services.ProductService;
 import lombok.experimental.PackagePrivate;
 
 @RestController
-@RequestMapping
+@RequestMapping("/products")
 public class ProductController {
 	@Autowired
 	private ProductService productService;
 
+	@PostMapping
 	public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
 		ProductDto createdProduct = productService.create(productDto);
 
@@ -46,7 +48,7 @@ public class ProductController {
 	public ResponseEntity<ApiResponseMessage> delete(@PathVariable String productId) {
 		productService.delete(productId);
 	
-		ApiResponseMessage responseMessage = ApiResponseMessage.builder().message("Product is succeully deleted").status(HttpStatus.OK).success(true).build();
+		ApiResponseMessage responseMessage = ApiResponseMessage.builder().message("Product is successfully deleted").status(HttpStatus.OK).success(true).build();
 		
 		return new ResponseEntity<>(responseMessage,HttpStatus.OK);
 	

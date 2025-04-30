@@ -1,6 +1,8 @@
 package com.gdp.demo.services.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductDto create(ProductDto productDto) {
 		Product product = mapper.map(productDto, Product.class);
+		
+		//product Id
+		String productId = UUID.randomUUID().toString();
+		product.setProductId(productId);
+		
+		//add date
+		product.setAddedDate(new Date());
+		
+		
+		
 		Product saveProduct = productRepository.save(product);
 		return mapper.map(saveProduct, ProductDto.class);
 		
@@ -43,9 +55,9 @@ public class ProductServiceImpl implements ProductService {
 	Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found") );
 	product.setTitle(product.getTitle());
 	product.setDescription(productDto.getDescription());
-	product.setPrice(productDto.getDicountedPrice());
+	product.setPrice(productDto.getPrice());
 	product.setDicountedPrice(productDto.getDicountedPrice());
-	product.setQantity(productDto.getQantity());
+	product.setQuantity(productDto.getQuantity());
 	product.setLive(productDto.isLive());
 	product.setStock(productDto.isStock());
 	
@@ -81,18 +93,18 @@ public class ProductServiceImpl implements ProductService {
 		
 		Sort sort=(sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()): (Sort.by(sortBy).ascending());
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);  
-		Page<Product>page=productRepository.findByLiveTrue(pageable);
+		Page<Product>page=productRepository.findAll(pageable);
 		
 		
 		
 		return Helper.getPageableResponse(page, ProductDto.class);
 	}
-
+//live 
 	@Override
 	public PageableResponse<ProductDto> getAllLive(int pageNumber, int pageSize, String sortBy, String sortDir) {
 		Sort sort=(sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()): (Sort.by(sortBy).ascending());
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);  
-		Page<Product>page=productRepository.findAll(pageable);
+		Page<Product>page=productRepository.findByLiveTrue(pageable);
 		
 		
 		

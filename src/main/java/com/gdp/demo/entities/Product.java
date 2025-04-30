@@ -25,7 +25,7 @@ public class Product {
 	private String description;
 	private int price;
 	private int dicountedPrice;
-	private int qantity;
+	private int quantity;
 	private Date addedDate;
 	private boolean live;
 	private boolean stock;
